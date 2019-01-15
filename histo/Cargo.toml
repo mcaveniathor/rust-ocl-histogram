@@ -1,0 +1,9 @@
+[package]
+name = "histo"
+version = "0.1.0"
+authors = ["Thor McAvenia <mcaveniathor@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+ocl = "0.19"
+image = "*"
