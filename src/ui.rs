@@ -9,7 +9,6 @@ use tui::Terminal;
 use std::sync::mpsc;
 
 pub fn tuihisto() -> Result<(), Error> {
-    //let data = luminance()?;
     let stdout = io::stdout().into_raw_mode()?;
     let backend = TermionBackend::new(stdout);
     let mut terminal = Terminal::new(backend)?;
@@ -20,7 +19,6 @@ pub fn tuihisto() -> Result<(), Error> {
             .margin(3)
             .constraints([Constraint::Percentage(100)].as_ref())
             .split(size);
-    /*
         BarChart::default()
             .block(Block::default().title("Histogram").borders(Borders::ALL))
             .data()
