@@ -1,2 +1,5 @@
 # rust-ocl-histogram
-A GPU accelerated histogram generator written in Rust. More to come(?)
+An image luminance (histogram) generator written in Rust. Uses both CPU multithreading and GPU acceleration via OpenCL in order to maximize performance while maintaining thread and memory safety. 
+
+To run:
+cargo run PATH_TO_IMAGE
