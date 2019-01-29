@@ -57,7 +57,7 @@ pub fn luminance(
 
     "#;
     let wh: usize = width * height;
-    let (platform, device, context_properties, context) = boilerplate()?;
+    let (_platform, device, _context_properties, context) = boilerplate()?;
     let src_c = CString::new(src)?;
     let program = core::create_program_with_source(&context, &[src_c])?;
     core::build_program(&program, Some(&[device]), &CString::new("")?, None, None)?;
@@ -73,6 +73,7 @@ pub fn luminance(
     for _ in 0..width * height {
         pixels.push(rx.recv().unwrap());
     }
+    println!("Received all pixels in GPU thread");
     let buf_in = unsafe {
         core::create_buffer(
             &context,
@@ -107,6 +108,7 @@ pub fn luminance(
     core::set_kernel_arg(&kernel, 3, ArgVal::mem(&buf_sums_out))?;
 
     //run kernel
+    println!("Running OpenCL kernel");
     unsafe {
         core::enqueue_kernel(
             &queue,
@@ -119,7 +121,6 @@ pub fn luminance(
             None::<&mut core::Event>,
         )?;
     }
-
     // read from output buffers
     unsafe {
         core::enqueue_read_buffer(
@@ -144,6 +145,7 @@ pub fn luminance(
             None::<&mut core::Event>,
         )?;
     }
+    println!("Kernel execution complete");
     /*
     println!("{:?}", vec_lum_out);
     println!("{:?}", vec_sums_out);
